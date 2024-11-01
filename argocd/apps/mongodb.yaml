@@ -22,7 +22,7 @@ spec:
         # Persistent Storage
         persistence:
           enabled: true
-          storageClass: local-path  # Adaptez à votre storage class
+          storageClass: nfs-storage  # Adaptez à votre storage class
           size: 10Gi
 
         # Configuration réseau

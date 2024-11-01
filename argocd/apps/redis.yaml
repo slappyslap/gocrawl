@@ -29,13 +29,13 @@ spec:
         master:
           persistence:
             enabled: true
-            storageClass: local-path  # Adaptez à votre storage class
+            storageClass: nfs-storage  # Adaptez à votre storage class
             size: 8Gi
 
         replica:
           persistence:
             enabled: true
-            storageClass: local-path  # Adaptez à votre storage class
+            storageClass: nfs-storage  # Adaptez à votre storage class
             size: 8Gi
 
         # Configuration des ressources
