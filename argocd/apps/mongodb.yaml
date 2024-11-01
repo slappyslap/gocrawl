@@ -44,7 +44,7 @@ spec:
           type: RollingUpdate
 
         volumePermissions:
-          enabled: false
+          enabled: true
 
   destination:
     server: https://kubernetes.default.svc
