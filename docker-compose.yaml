@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:8.0.3
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+
+  mongoclient:
+    image: mongoclient/mongoclient:latest
+    environment:
+      MONGO_URL: mongodb://mongodb:27017
+    depends_on:
+      - mongodb
+    ports:
+      - 8082:3000
+
+  redis:
+    image: redis/redis-stack-server:latest
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: redis:6379
+    ports:
+      - 8081:8081
+
+volumes:
+  mongo_data:
+    driver: local
+  redis_data:
+    driver: local

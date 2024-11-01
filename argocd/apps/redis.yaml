@@ -1,0 +1,88 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: redis-cluster
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: redis
+    targetRevision: 20.2.1
+    helm:
+      values: |
+        architecture: cluster
+
+        # Configuration du cluster
+        clusterNodes: 6
+        clusterReplicas: 1
+
+        # Authentification
+        auth:
+          enabled: false
+
+        # Configuration réseau
+        service:
+          type: ClusterIP
+
+        # Persistent Storage
+        master:
+          persistence:
+            enabled: true
+            storageClass: local-path  # Adaptez à votre storage class
+            size: 8Gi
+
+        replica:
+          persistence:
+            enabled: true
+            storageClass: local-path  # Adaptez à votre storage class
+            size: 8Gi
+
+        # Configuration des ressources
+        master:
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
+
+        replica:
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
+
+        # Probes de santé
+        master:
+          startupProbe:
+            enabled: true
+            initialDelaySeconds: 30
+
+        replica:
+          startupProbe:
+            enabled: true
+            initialDelaySeconds: 30
+
+        # Configuration avancée
+        updateStrategy:
+          type: RollingUpdate
+
+        # Metrics et monitoring (optionnel)
+        metrics:
+          enabled: false
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gocrawl
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
