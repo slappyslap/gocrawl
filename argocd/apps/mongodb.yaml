@@ -21,6 +21,8 @@ spec:
         persistence:
           enabled: true
           storageClass: nfs-storage
+          accessModes:
+            - ReadWriteMany
 
         service:
           enabled: true
@@ -40,6 +42,9 @@ spec:
 
         updateStrategy:
           type: RollingUpdate
+
+        volumePermissions:
+          enabled: true
 
   destination:
     server: https://kubernetes.default.svc
