@@ -16,21 +16,16 @@ spec:
         auth:
           enabled: false
 
-        # Configuration du cluster
         replicaCount: 3
 
-        # Persistent Storage
         persistence:
           enabled: true
-          storageClass: nfs-storage  # Adaptez à votre storage class
-          size: 10Gi
+          storageClass: nfs-storage
 
-        # Configuration réseau
         service:
           enabled: true
           type: ClusterIP
 
-        # Configuration des ressources
         resources:
           requests:
             cpu: 500m
@@ -39,20 +34,10 @@ spec:
             cpu: 1
             memory: 2Gi
 
-        # Probes de santé
         startupProbe:
           enabled: true
           initialDelaySeconds: 30
 
-        # Configuration des volumes
-        volumePermissions:
-          enabled: true
-
-        # Configuration avancée du replica set
-        arbiter:
-          enabled: true
-
-        # Politique de mise à jour
         updateStrategy:
           type: RollingUpdate
 
