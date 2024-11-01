@@ -11,7 +11,7 @@ spec:
     targetRevision: 20.2.1
     helm:
       values: |
-        architecture: cluster
+        architecture: replication
 
         # Configuration du cluster
         clusterNodes: 6
